@@ -1,1 +1,50 @@
 
+
+{
+    "project_info": {
+      "project_number": "676910663410",
+      "firebase_url": "https://retomba-d3cf1.firebaseio.com",
+      "project_id": "retomba-d3cf1",
+      "storage_bucket": "retomba-d3cf1.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:676910663410:android:27f35e9f24b32ed8aaf26b",
+          "android_client_info": {
+            "package_name": "com.kanno.loginflutterapp"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "676910663410-n783hnflmquvqjkfv89noatma2ikthae.apps.googleusercontent.com",
+            "client_type": 1,
+            "android_info": {
+              "package_name": "com.kanno.loginflutterapp",
+              "certificate_hash": "92e50128e805ca38e0afccad46a7156f4a5421a1"
+            }
+          },
+          {
+            "client_id": "676910663410-v3k89n1jg1vcfrcftjvovj5gl31cspru.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyCwfoAhuOimjzaaKVoafUsmKtSMT6hg_6g"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "676910663410-v3k89n1jg1vcfrcftjvovj5gl31cspru.apps.googleusercontent.com",
+                "client_type": 3
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }

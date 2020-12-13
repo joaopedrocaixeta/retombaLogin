@@ -1,18 +1,23 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:loginflutterapp/constants.dart';
 import 'package:loginflutterapp/models/user_model.dart';
-import 'package:loginflutterapp/screens/login_screen.dart';
-import 'package:loginflutterapp/screens/signup_screen.dart';
+import 'package:loginflutterapp/screens/firstpage_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 void main() async{
-
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,// transparent status bar
+    systemNavigationBarColor: Colors.black, // navigation bar color
+    statusBarIconBrightness: Brightness.dark, // status bar icons' color
+    systemNavigationBarIconBrightness: Brightness.dark,
+  ));
   runApp(MyApp());
-  /*
-  Firestore.instance.collection("mensagens").document().setData({
-    'nome': 'keynes',
-    'mensagem' : 'oi, tudo bem?'
-  }); */
+  
   QuerySnapshot snapshot = await Firestore.instance.collection('mensagens').getDocuments();
   snapshot.documents.forEach((d){
     print(d.data);
@@ -28,78 +33,18 @@ class MyApp extends StatelessWidget {
       child:  MaterialApp(
         title: 'Retomba',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-          backgroundColor: Colors.lightGreenAccent,
+          fontFamily: 'Montserrat',
+          scaffoldBackgroundColor: Colors.white,
+          textTheme: TextTheme(
+            bodyText1: TextStyle(color: kDarkBlue),
+            bodyText2: TextStyle(color: kDarkBlue),
+          ),
+          primaryColor: kDarkBlue,
+          //textTheme: Theme.of(context).textTheme.apply(bodyColor: kDarkBlue),
+          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: Home(),//LoginScreen(),// Container(),
+        debugShowCheckedModeBanner: false,
       ));
   }
 }
-
-class Home extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Retomba App"),
-        centerTitle: true,
-        backgroundColor: Colors.blueAccent,
-      ),
-      body: ScopedModelDescendant<UserModel>(
-        builder: (context, child, model ){
-          if(model.isLoading)
-            return Center(child: CircularProgressIndicator(),);
-
-          return Form(
-              key: _formKey,
-              child: ListView(
-                padding: EdgeInsets.all(16.0),
-                children: <Widget>[
-                  Image(image: AssetImage('images/retomba.jpg')),
-                  Text(
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                    style: TextStyle(
-
-                        color: Colors.grey,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),
-                  SizedBox(height: 16.0,),
-                  Text("Olá, ${!model.isLoggedIn() ? "" : model.userData["name"]}"),
-                  GestureDetector(
-                    child:
-
-                    Text(
-                      !model.isLoggedIn()? "Entre ou cadastre-se >" : "Sair",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold
-                      ),
-                    ),
-                    onTap: (){
-                      if(!model.isLoggedIn())
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context)=>LoginScreen() )
-                      );
-                      else
-                        model.signOut();
-                    },
-                  ),
-                  SizedBox(height: 16.0,),
-
-
-
-
-                ],
-              )
-          );
-        },
-      )
-    );
-  }
-}
-
-
