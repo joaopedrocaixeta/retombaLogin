@@ -62,14 +62,13 @@ class LoginScreen extends StatelessWidget {
                           Align(
                               alignment: Alignment.centerRight,
                               child: FlatButton(
+                                highlightColor: Colors.white,
                                 onPressed: (){},
-                                child: 
-                                Text("Esqueci minha senha",
+                                child: Text("Esqueci minha senha",
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w300,
                                     fontSize: 12,
                                     color: kDarkBlue,
-
                                   ),
                                 textAlign: TextAlign.right,),
                                 padding: EdgeInsets.zero,
@@ -102,22 +101,25 @@ class LoginScreen extends StatelessWidget {
                           Align(
                               alignment: Alignment.center,
                               child: FlatButton(
+                                highlightColor: Colors.white,
                                 child: RichText(
                                   text: TextSpan(
                                     text: 'Não tem conta? ',
                                     style: TextStyle(
                                       color: kDarkBlue,
                                       fontFamily: 'montserrat',
+                                      fontSize:12,
                                     ),
                                     children: <TextSpan>[
-                                      TextSpan(text: 'Registrar', style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold)),
+                                      TextSpan(text: 'Registrar', style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold)),
                                     ],
                                   ),
                                 ),
                                 
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>SignUpScreen()));
+                                  Navigator.of(context).push(_createRoute());
+                                  //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>SignUpScreen()));
                                 },
                               )
                           ),
@@ -125,10 +127,13 @@ class LoginScreen extends StatelessWidget {
                       ),
                     )
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: buildBottomLogin(size),
-                  )
+                  Hero(
+                      tag: 'BottomLogin',
+                      child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: buildBottomLogin(size),
+                    ),
+                  ),
                 ]
               ),
             ),
@@ -137,6 +142,21 @@ class LoginScreen extends StatelessWidget {
       )
     );
   }
+}
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => SignUpScreen(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      var begin = Offset(1.0, 0.0);
+      var end = Offset.zero;
+      var curve = Curves.ease;
 
-  
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }

@@ -121,17 +121,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                                   };
                                   model.signUp(
-                                      userData: userData,
-                                      pass: _passController.text,
-                                      onSuccess: _onSuccess,
-                                      onFail: _onFail);
-                                  }
-                                },
+                                    userData: userData,
+                                    pass: _passController.text,
+                                    onSuccess: _onSuccess,
+                                    onFail: _onFail,
+                                  );
+                                }
+                              },
                             )
                           ),
                           Align(
                             alignment: Alignment.center,
                             child: FlatButton(
+                              highlightColor: Colors.white,
                               child: RichText(
                                 text: TextSpan(
                                   text: 'Já tem conta? ',
@@ -147,7 +149,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               
                               padding: EdgeInsets.zero,
                               onPressed: () {
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginScreen()));
+                                 Navigator.of(context).push(_createRoute());
                               },
                             )
                           ),
@@ -155,10 +157,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: buildBottomLogin(size),
-                  )
+                  Hero(
+                      tag: 'BottomLogin',
+                      child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: buildBottomLogin(size),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -190,5 +195,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 }
 
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => LoginScreen(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      var begin = Offset(-1.0, 0.0);
+      var end = Offset.zero;
+      var curve = Curves.ease;
 
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
 

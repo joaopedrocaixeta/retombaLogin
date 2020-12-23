@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:loginflutterapp/constants.dart';
 import 'package:loginflutterapp/models/user_model.dart';
 import 'package:loginflutterapp/screens/firstpage_screen.dart';
+import 'package:loginflutterapp/screens/presentation_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 void main() async{
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
           //textTheme: Theme.of(context).textTheme.apply(bodyColor: kDarkBlue),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: Home(),//LoginScreen(),// Container(),
+        home: Presentation1(),//LoginScreen(),// Container(),
         debugShowCheckedModeBanner: false,
       ));
   }
